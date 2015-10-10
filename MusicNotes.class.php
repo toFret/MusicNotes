@@ -32,6 +32,54 @@ Class MusicNotes {
 
 
     /*
+     *      The one and only definition of all musical notes used in the system.
+
+            Designed for the western C centered tuning,
+            it might be used with other types of tunings.
+     
+     *      Every application will use this note order:   
+     *
+     */
+    protected function defineAllNotes() {
+
+        $this->setNoteSystem();
+
+        $countArr = array();
+        foreach ( $this->allNotes as $note => $index ) {
+            $countArr[$index][] = $note;
+        }
+        foreach ( $countArr as $i => $countedRow  ) {
+            if ( count($countedRow) == 2 ) {
+                //  This a sharp / flat same note situation
+                //  map them to each other.
+                $this->flatSharpLookup [$countedRow[0]] = $countedRow[1];
+                $this->flatSharpLookup [$countedRow[1]] = $countedRow[0];               
+            }
+        }
+
+        // create flat and sharp lookups for the numeric keys.
+        $this->allNotesFlipFlat = array_flip(               $this->allNotes       );
+        $this->allNotesFlipSharp= array_flip( array_reverse($this->allNotes, true ));                           
+        ksort($this->allNotesFlipSharp);
+
+        $this->numberOfNotes();
+    }
+
+
+        
+    /*
+     *  Set and gets the number of notes in the note system.
+     *
+     */
+    public function numberOfNotes() {
+        if ( isset($this->allNotesFlipFlat) && is_array($this->allNotesFlipFlat) ) {
+            $this->numberOfNotes = count($this->allNotesFlipFlat);
+            return $this->numberOfNotes;
+        }
+    }
+
+
+    /*
      *  Set a note system. Standard is "C".
      *  Options:
             hexachord
@@ -116,53 +164,6 @@ Class MusicNotes {
         unset($this->allNotesFlipFlat);
         unset($this->allNotesFlipSharp);
 
-    }
-
-    /*
-     *      The one and only definition of all musical notes used in the system.
-
-            Designed for the western C centered tuning,
-            it might be used with other types of tunings.
-     
-     *      Every application will use this note order:   
-     *
-     */
-    protected function defineAllNotes() {
-
-        $this->setNoteSystem();
-
-        $countArr = array();
-        foreach ( $this->allNotes as $note => $index ) {
-            $countArr[$index][] = $note;
-        }
-        foreach ( $countArr as $i => $countedRow  ) {
-            if ( count($countedRow) == 2 ) {
-                //  This a sharp / flat same note situation
-                //  map them to each other.
-                $this->flatSharpLookup [$countedRow[0]] = $countedRow[1];
-                $this->flatSharpLookup [$countedRow[1]] = $countedRow[0];               
-            }
-        }
-
-        // create flat and sharp lookups for the numeric keys.
-        $this->allNotesFlipFlat = array_flip(               $this->allNotes       );
-        $this->allNotesFlipSharp= array_flip( array_reverse($this->allNotes, true ));                           
-        ksort($this->allNotesFlipSharp);
-
-        $this->numberOfNotes();
-    }
-
-
-        
-    /*
-     *  Set and gets the number of notes in the note system.
-     *
-     */
-    public function numberOfNotes() {
-        if ( isset($this->allNotesFlipFlat) && is_array($this->allNotesFlipFlat) ) {
-            $this->numberOfNotes = count($this->allNotesFlipFlat);
-            return $this->numberOfNotes;
-        }
     }
 
 
