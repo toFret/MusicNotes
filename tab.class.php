@@ -1,5 +1,4 @@
 <?php
-requireFromLibrary('classes/fretboard/MusicNotes.class.php');
 
 
 Class TAB extends MusicNotes {

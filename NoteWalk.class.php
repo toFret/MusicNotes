@@ -1,5 +1,5 @@
 <?php
-requireFromLibrary('classes/fretboard/MusicNotes.class.php');
+//requireFromLibrary('classes/fretboard/MusicNotes.class.php');
 
 
 Class NoteWalk extends MusicNotes {

@@ -1,5 +1,4 @@
 <?php
-requireFromLibrary('classes/fretboard/NoteWalk.class.php');
 
 /*
 Cymatic Frequency Numbers         
